@@ -1,0 +1,239 @@
+<html>
+  <head>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" rel="stylesheet"/>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+
+
+
+<link rel="stylesheet" href="index.css">
+<link rel="stylesheet" href="index.css">
+<style>
+  #legend {
+    font-weight: 800;
+    font-size: 34;
+    text-align: center;
+    font-family: roboto;
+   
+}
+
+body {
+    background:url( {{ url_for('static', filename='tvs_epic_background.jpg') }} ) ;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow-x: hidden;
+}
+
+</style>
+  </head>
+  <body>
+    <form class="form-horizontal" method="post" enctype="multipart/form-data">
+      <fieldset>
+
+        <!-- Form Name -->
+        <center>
+          <legend id="legend">Automated Valuation Of Used Car</legend>
+        </center>
+        
+
+        <!-- Text input-->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="company">Company</label>  
+          <div class="col-md-4">
+            <select id="company" name="company" class="form-control"  onchange="populate(this.id,'model_name')">
+              
+              {% for company in company_names  %}
+                <option value= "{{company}}" SELECTED>{{company}}</option>"
+              {% endfor %}
+              <option selected value="" style="display:none" disabled selected value>--Select--</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="model_name">Model</label>
+          <div class="col-md-4">
+            <select id="model_name" name="model_name" class="form-control" onchange="changePurpose()" required>
+            </select>
+          </div>
+        </div>
+
+        <script>
+          var myArray  = JSON.parse('{{ model_names | tojson }}');
+              console.log(myArray);
+          function populate(s1,s2){
+            var s1= document.getElementById(s1);
+            var s2= document.getElementById(s2);
+            console.log(s1.value);
+            s2.innerHTML = "";
+            var optionArray=[];
+            var i=0;
+            for(i=0; i<myArray.length; i++)
+            {
+              console.log(myArray[i]);
+               if(s1.value==myArray[i][0])
+              {
+                optionArray.push(myArray[i][1]);
+              }
+            }
+           // s1.value == "maruti"
+            console.log(optionArray)
+            for(i=0; i<optionArray.length; i++){
+              var newoption = document.createElement("option");
+              newoption.value = optionArray[i];
+              newoption.innerHTML = optionArray[i];
+              s2.options.add(newoption);
+            }
+          }
+        </script>
+
+        <!-- Select Basic -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="sellertype">Seller Type</label>
+          <div class="col-md-4">
+            <select id="sellertype" name="sellertype" class="form-control" onchange="changePurpose()" required>
+              <option selected value="" style="display:none" disabled selected value>--Select--</option>
+              <option value="individual">Individual</option>
+              <option value="dealer">Dealer</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Select Basic -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="fuel">Fuel Type</label>
+          <div class="col-md-4">
+            <select id="fuel" name="fuel" class="form-control" onchange="changePurpose()" required>
+              <option selected value="" style="display:none" disabled selected value>--Select--</option>
+              <option value="diesel">Diesel</option>
+              <option value="petrol">Petrol</option>
+              <option value="cng">CNG</option>
+              <option value="lpg">LPG</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Select Basic -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="datepicker" >Year of Purchase</label>
+          <div class="col-md-4">
+            <input required="" type="text" id="datepicker" name="datepicker"/>
+            <script>
+              $("#datepicker").datepicker({
+                format: "yyyy",
+                viewMode: "years", 
+                minViewMode: "years"
+              });
+            </script>
+          </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="owner">Owner Number (First, Second)</label>  
+          <div class="col-md-4">
+            <select id="owner" name="owner" class="form-control" onchange="changePurpose()" required>
+              <option selected value="" style="display:none" disabled selected value>--Select--</option>
+              <option value="first">First</option>
+              <option value="second">Second</option>
+              <option value="third">Third</option>
+              <option value="fourth and above">Fourth and above</option>
+            </select>
+
+          </div>
+        </div>
+
+        <!-- Select Basic -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="transmissiontype">Transmission</label>
+          <div class="col-md-4">
+            <select id="transmissiontype" name="transmissiontype" class="form-control" onchange="changePurpose()" required>
+              <option selected value="" style="display:none" disabled selected value>--Select--</option>
+              <option value="manual">Manual</option>
+              <option value="automatic">Automatic</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Appended Input-->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="distance">Driven for</label>
+          <div class="col-md-4">
+            <div class="input-group">
+              <input id="distance" name="distance" class="form-control" placeholder="1000" type="text" required="">
+              <span class="input-group-addon">kms</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Appended Input-->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="mileage">Mileage</label>
+          <div class="col-md-4">
+            <div class="input-group">
+              <input id="mileage" name="mileage" class="form-control" placeholder="22.1" type="text">
+              <span class="input-group-addon">kmpl</span>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="car_number">Vehicle Registration Number</label>
+          <div class="col-md-4">
+            <div class="input-group">
+              <input id="car_number" name="car_number" class="form-control" placeholder="DL1AKXXXX" type="text">
+            </div>
+
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="certificate_date">Certificate validity date (Same as mentioned in Certificate)</label>
+          <div class="col-md-4">
+            <div class="input-group">
+              <input id="certificate_date" name="certificate_date" class="form-control" placeholder="10/2/22" type="text">
+            </div>
+
+          </div>
+        </div>
+        <!-- File Button --> 
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="documents">Upload Car Documents (Insurance, PUC, etc.)</label>
+          <div class="col-md-4">
+            Allowed formats for uploads are .png, .jpg, .jpeg only<input id="documents" name="documents" class="input-file" type="file">
+          </div>
+        </div>
+
+        <!-- File Button --> 
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="images">Upload Car Images/Videos (From all sides)</label>
+          <div class="col-md-4">
+            Allowed formats for uploads are .png, .jpg, .jpeg .mp4 only<input id="images" name="images" class="input-file" type="file">
+          </div>
+        </div>
+
+        <!-- Button -->
+        <div class="form-group">
+          <label class="col-md-5 control-label" for="submit"> </label>
+          <div class="col-md-4">
+            <button id="submit" name="submit" class="btn btn-primary">Predict Price</button>
+          </div>
+        </div>
+      
+      </fieldset>
+      <center>
+        <label>Vehicle Numbers {{match_check_number}}</label><br>
+        <label>The date mentioned by you and in the certificate {{match_check}}</label><br>
+        <label>Estimated value of {{company}} {{modelname}} is Rs.{{estimated_price}}</label><br>
+      </center>
+    </form>
+
+  </body>    
+</html>

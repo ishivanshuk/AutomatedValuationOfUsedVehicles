@@ -1,0 +1,37 @@
+#legend {
+    font-weight: 800;
+    text-align: center;
+    margin-top: 50px;
+}
+
+body {
+    background:url(./tvs_epic_background.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+#submit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 20px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+  }
+  
+  #submit:hover {background-color: #3e8e41}
+  
+  #submit:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
